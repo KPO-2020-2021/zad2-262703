@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BazaTestu.hh"
+#include "stat.hh"
 
 using namespace std;
 
@@ -32,15 +33,37 @@ int main(int argc, char **argv)
   cout << endl;
 
   WyrazenieZesp   WyrZ_PytanieTestowe;
-  
+  LZespolona LiczbaZespolonaWe;
+  int good=0,bad=0;
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Czesc rzeczywista pierwszego argumentu: ";
-    cout << WyrZ_PytanieTestowe.Arg1.re << endl;
+
+    cout << ":? Podaj wynik operacji: " << WyrZ_PytanieTestowe;
+    cout << "   Twoja odpowiedz:  ";
+    cin >> LiczbaZespolonaWe;
+    while (cin.fail()){
+      cin.clear();
+      cerr << "Blad formatu liczby zespolonej"<<endl;
+      cout << "   Twoja odpowiedz:  ";
+      cin >> LiczbaZespolonaWe;
+    } 
+    LZespolona Wynik;
+    Wynik = Oblicz(WyrZ_PytanieTestowe);
+    if (Wynik.im == LiczbaZespolonaWe.im && Wynik.re == LiczbaZespolonaWe.re){
+      cout << ":) Odpowiedz poprawna" << endl;
+      ++good;
+    }
+    else {
+      cout << ":( Blad. Prawidlowym wynikiem jest: " << Wynik;
+      ++bad;
+    }
+     
   }
+
 
   
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
-
+  
+  Statystyka(good,bad);
 }
