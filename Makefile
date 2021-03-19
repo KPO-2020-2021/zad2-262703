@@ -1,4 +1,5 @@
 TRGDIR=.
+
 OBJ=./obj
 SRC=./src
 INC=./inc
