@@ -35,28 +35,38 @@ int main(int argc, char **argv)
   WyrazenieZesp   WyrZ_PytanieTestowe;
   LZespolona LiczbaZespolonaWe;
   int good=0,bad=0;
-  while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
+  try{
+    while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
 
-    cout << ":? Podaj wynik operacji: " << WyrZ_PytanieTestowe;
-    cout << "   Twoja odpowiedz:  ";
-    cin >> LiczbaZespolonaWe;
-    while (cin.fail()){
-      cin.clear();
-      cerr << "Blad formatu liczby zespolonej"<<endl;
+      cout << ":? Podaj wynik operacji: " << WyrZ_PytanieTestowe;
       cout << "   Twoja odpowiedz:  ";
-      cin >> LiczbaZespolonaWe;
-    } 
-    LZespolona Wynik;
-    Wynik = Oblicz(WyrZ_PytanieTestowe);
-    if (Wynik.im == LiczbaZespolonaWe.im && Wynik.re == LiczbaZespolonaWe.re){
-      cout << ":) Odpowiedz poprawna" << endl;
-      ++good;
-    }
-    else {
-      cout << ":( Blad. Prawidlowym wynikiem jest: " << Wynik;
-      ++bad;
-    }
+      cin >> LiczbaZespolonaWe; //wprowadzenie odpowiedzi
+      while (cin.fail()){
+        cin.clear();
+        cerr << "Blad formatu liczby zespolonej"<<endl;
+        cout << "   Twoja odpowiedz:  ";
+        cin >> LiczbaZespolonaWe; 
+      } 
+      LiczbaZespolonaWe.arg(); //argument liczby zespolonej
+      LZespolona Wynik;
+      Wynik = Oblicz(WyrZ_PytanieTestowe);//obliczenie poprawnego wyniku
+      if (Wynik == LiczbaZespolonaWe){//modul dla statystyki
+        cout << ":) Odpowiedz poprawna" << endl;
+        ++good;
+      }
+      else {
+        cout << ":( Blad. Prawidlowym wynikiem jest: " << Wynik;
+        ++bad;
+      }
      
+    }
+  }
+  catch (runtime_error& e) {
+    // prints that exception has occurred 
+    // calls the what function 
+    // using runtime_error object 
+    cout << "Exception occurred" << endl 
+    << e.what(); 
   }
 
 
